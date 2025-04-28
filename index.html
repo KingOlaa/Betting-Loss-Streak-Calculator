@@ -2,57 +2,96 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Consecutive Loss Calculator</title>
+  <title>King Ola's Loss Streak Calculator</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      padding: 20px;
-      background: #f7f9fc;
+      background: linear-gradient(135deg, #e0f7fa, #e1bee7);
+      font-family: 'Poppins', sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
     }
     .container {
-      max-width: 400px;
-      margin: auto;
       background: white;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    }
-    input, button {
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+      max-width: 450px;
       width: 100%;
-      margin: 10px 0;
+      text-align: center;
+    }
+    h1 {
+      margin-bottom: 20px;
+      font-size: 26px;
+      color: #6a1b9a;
+    }
+    label {
+      font-weight: bold;
+      display: block;
+      margin-top: 15px;
+      color: #333;
+    }
+    input {
+      width: 100%;
       padding: 10px;
+      margin-top: 5px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
       font-size: 16px;
     }
     button {
-      background-color: #007BFF;
+      margin-top: 20px;
+      padding: 12px;
+      width: 100%;
+      background-color: #6a1b9a;
       color: white;
+      font-size: 18px;
       border: none;
+      border-radius: 8px;
       cursor: pointer;
+      transition: background 0.3s ease;
     }
     button:hover {
-      background-color: #0056b3;
+      background-color: #4a148c;
     }
     #result {
-      margin-top: 15px;
-      font-weight: bold;
+      margin-top: 25px;
+      background: #f3e5f5;
+      padding: 15px;
+      border-radius: 10px;
+      text-align: left;
+      font-size: 16px;
+    }
+    footer {
+      margin-top: 20px;
+      font-size: 12px;
+      color: #666;
     }
   </style>
 </head>
 <body>
+
   <div class="container">
-    <h2>Consecutive Loss Calculator</h2>
-    <label>Balance:</label>
-    <input type="number" id="balance" step="any" placeholder="Enter balance">
+    <h1>👑 King Ola's Loss Streak Calculator</h1>
 
-    <label>Bet per round:</label>
-    <input type="number" id="bet" step="any" placeholder="Enter initial bet">
+    <label>Balance (₦ / $ / BTC):</label>
+    <input type="number" id="balance" step="any" placeholder="Enter your total balance">
 
-    <label>Multiplier per loss:</label>
+    <label>Starting Bet per Round:</label>
+    <input type="number" id="bet" step="any" placeholder="Enter your initial bet">
+
+    <label>Multiplier per Loss:</label>
     <input type="number" id="multiplier" step="any" value="1.1">
 
     <button onclick="calculate()">Calculate</button>
 
     <div id="result"></div>
+
+    <footer>
+      Made with ❤️ by King Ola • 2025
+    </footer>
   </div>
 
   <script>
@@ -62,7 +101,7 @@
       const multiplier = parseFloat(document.getElementById('multiplier').value);
 
       if (isNaN(balance) || isNaN(bet) || isNaN(multiplier) || balance <= 0 || bet <= 0 || multiplier <= 1) {
-        document.getElementById('result').innerHTML = "Please enter valid positive numbers.";
+        document.getElementById('result').innerHTML = "<strong style='color: red;'>Please enter valid positive numbers!</strong>";
         return;
       }
 
@@ -76,8 +115,17 @@
         rounds++;
       }
 
-      document.getElementById('result').innerHTML = `You can survive <strong>${rounds}</strong> consecutive losses.`;
+      let finalBet = bet * Math.pow(multiplier, rounds - 1); // Bet before last loss
+
+      document.getElementById('result').innerHTML = `
+        ✅ <strong>Results:</strong><br><br>
+        • Maximum consecutive losses you can survive: <strong>${rounds}</strong><br>
+        • Total money spent after ${rounds} losses: <strong>${totalLoss.toFixed(6)}</strong><br>
+        • Bet amount at last loss: <strong>${finalBet.toFixed(6)}</strong><br><br>
+        🔥 Stay smart and manage your risks wisely, King!
+      `;
     }
   </script>
+
 </body>
 </html>
